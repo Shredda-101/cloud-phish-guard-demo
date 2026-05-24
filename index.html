@@ -9,6 +9,8 @@
       html, body { width: 100%; min-height: 100vh; }
       body { background: #0a0a0a; }
       #root { width: 100%; min-height: 100vh; }
+
+      /* ── Loader ────────────────────────────────────────── */
       .loader-wrapper {
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
@@ -17,40 +19,71 @@
         background: #0a0a0a; z-index: 9999;
       }
       .loader-logo {
-        width: 100px; height: auto;
-        opacity: 0.2; margin-bottom: 32px;
-        animation: pulse 2s ease-in-out infinite;
+        width: 80px; height: auto;
+        opacity: 0.25; margin-bottom: 32px;
+        animation: pulse 2.4s ease-in-out infinite;
       }
-      .loader-bar { width: 200px; height: 2px; background: #18181b; overflow: hidden; }
+      .loader-bar {
+        width: 240px; height: 2px;
+        background: #18181b;
+        border-radius: 1px;
+        overflow: hidden;
+        position: relative;
+      }
       .loader-bar::after {
-        content: ''; display: block; width: 40%; height: 100%;
+        content: '';
+        position: absolute;
+        top: 0; left: -40%;
+        width: 40%; height: 100%;
         background: linear-gradient(90deg, transparent, #dc2626, transparent);
-        animation: l14-1 1.5s linear infinite;
+        border-radius: 1px;
+        animation: shimmer 1.4s ease-in-out infinite;
       }
-      @keyframes l14-1 { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
-      @keyframes pulse { 0%,100% { opacity: 0.15; } 50% { opacity: 0.25; } }
+      @keyframes shimmer {
+        0%   { left: -40%; }
+        100% { left: 110%; }
+      }
+      @keyframes pulse {
+        0%,100% { opacity: 0.2;  transform: scale(1);    }
+        50%      { opacity: 0.35; transform: scale(1.04); }
+      }
+
+      /* ── Watermark ────────────────────────────────────── */
       .watermark {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        pointer-events: none; z-index: 1;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        pointer-events: none; z-index: 0;
         display: flex; align-items: center; justify-content: center;
-        opacity: 0.04;
       }
-      .watermark img { width: 60%; max-width: 700px; height: auto; }
+      .watermark img {
+        width: 65%; max-width: 680px; height: auto;
+        opacity: 0.05;
+        user-select: none;
+      }
     </style>
-    <script type="module" crossorigin src="./assets/index-D9YHmDI4.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CVBuFFRH.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CVBuFFRH.css" />
   </head>
   <body>
+    <div class="watermark"><img src="./assets/logo.png" alt="" /></div>
+
     <div class="loader-wrapper" id="loader">
-      <img src="/images/cloud-phish-guard-logo.png" class="loader-logo" alt="" />
+      <img src="./assets/logo.png" class="loader-logo" alt="loading" />
       <div class="loader-bar"></div>
     </div>
-    <div class="watermark"><img src="/images/cloud-phish-guard-logo.png" alt="" /></div>
+
     <div id="root" style="display:none"></div>
+
+    <script type="module" crossorigin src="./assets/index-D9YHmDI4.js"></script>
     <script>
       window.addEventListener('load', () => {
-        const r = document.getElementById('root');
-        if(r) { r.style.display = ''; const l = document.getElementById('loader'); if(l) l.style.display = 'none'; }
+        const root = document.getElementById('root');
+        const loader = document.getElementById('loader');
+        if (root) { root.style.display = ''; }
+        if (loader) {
+          loader.style.transition = 'opacity 0.4s ease';
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 450);
+        }
       });
     </script>
   </body>
