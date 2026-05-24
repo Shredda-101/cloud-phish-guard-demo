@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cloud-Phish Guard — Security Architecture</title>
-    <script type="module" crossorigin src="./assets/index-DVXGarnZ.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DDOpnoSv.css">
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #18181b; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', system-ui, sans-serif; }
+      .loader-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+      .loader-title { color: #a1a1aa; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+      .loader { width: 45px; aspect-ratio: 1; --c: no-repeat linear-gradient(#dc2626 0 0); background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c); animation: l14-1 .5s infinite alternate, l14-2 2s infinite; }
+      @keyframes l14-1 { 0%,10% { background-size: 20% 100% } 100% { background-size: 20% 20% } }
+      @keyframes l14-2 { 0%,49.9% { background-position: 0 0, 0 100%, 50% 50%, 50% 50%, 100% 0, 100% 100% } 50%,100% { background-position: 0 50%, 0 50%, 50% 0, 50% 100%, 100% 50%, 100% 50% } }
+      .loader-text { color: #52525b; font-size: 11px; font-family: monospace; letter-spacing: 1px; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div class="loader-wrapper" id="loader">
+      <span class="loader-title">Cloud-Phish Guard</span>
+      <div class="loader"></div>
+      <span class="loader-text">INITIALISING SECURITY LAYERS...</span>
+    </div>
+    <div id="root" style="display:none"></div>
+    <script>
+      setTimeout(function() {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('root').style.display = '';
+      }, 4000);
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
